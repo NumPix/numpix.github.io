@@ -1,5 +1,3 @@
-import * as dat from 'dat.gui'
-
 export const filterSettings = {
     usePattern: false,
     useDepth: false,

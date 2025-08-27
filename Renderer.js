@@ -1,5 +1,5 @@
-import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.179.1/build/three.module.js'
-import { OrbitControls } from 'https://cdn.jsdelivr.net/npm/three@0.179.1/examples/jsm/Addons.js';
+import * as THREE from 'three'
+import { OrbitControls } from 'three/addons/Addons.js';
 
 export class Renderer {
     constructor(graph, state, containter = document.body) {

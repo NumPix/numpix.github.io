@@ -1,4 +1,4 @@
-import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.162.0/build/three.module.js'
+import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.179.1/build/three.module.js'
 
 const k = 0.3;
 const restLength = 1;

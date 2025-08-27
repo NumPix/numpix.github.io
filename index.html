@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Space State Explorer</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      margin: 0;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="hud">
+    <div id="nodeCounter">Nodes selected: 0</div>
+    <div id="edgeCounter">Edges selected: 0</div>
+    <div id="inspectModeFlag">Inspect mode off</div>
+    <div id="colorModeLabel">Color mode: depth</div>
+    <div id="pauseLabel">Physics: on</div>
+  </div>
+
+  <div id="board">
+    <div class="tile" id="tile-0"><div></div></div>
+    <div class="tile" id="tile-1"><div></div></div>
+    <div class="tile" id="tile-2"><div></div></div>
+    <div class="tile" id="tile-3"><div></div></div>
+    <div class="tile" id="tile-4"><div></div></div>
+    <div class="tile" id="tile-5"><div></div></div>
+    <div class="tile" id="tile-6"><div></div></div>
+    <div class="tile" id="tile-7"><div></div></div>
+    <div class="tile" id="tile-8"><div></div></div>
+  </div>
+
+  <div id="help">
+    <b>Controls</b><br>
+    [Space] Toggle isolate<br>
+    [Esc] Clear selection<br>
+    [I] Inspect mode<br>
+    [P] Pause physics<br>
+    [1] Depth coloring<br>
+    [2] Probabilistic coloring<br>
+    [3] Minimax coloring<br>
+  </div>
+  <script type="module" src="./app.js"></script>
+
+  <div id="loadingScreen">
+    <span class="loader">Loading: 0%</span>
+    <div class="progressBar">
+      <div class="progressFill"></div>
+    </div>
+  </div>
+</body>
+
+
+</html>

@@ -25,17 +25,15 @@ const renderer = new Renderer(graph, state);
 GUI.initFilterGUI((filters) => {
     let filteredPoints = graph.vertices;
 
-    if (filters.usePattern) {
-        const pattern = filters.c0 + filters.c1 + filters.c2 +
+    if (filters.useState) {
+        const state = filters.c0 + filters.c1 + filters.c2 +
             filters.c3 + filters.c4 + filters.c5 +
             filters.c6 + filters.c7 + filters.c8;
-        const symmetries = States.getSymmetries(pattern);
+        const symmetries = States.getSymmetries(state);
 
         filteredPoints = filteredPoints.filter(n =>
             symmetries.some(sym => graph.matchBoard(sym, n.id))
         );
-
-        formatBoard(pattern);
     }
 
     if (filters.useDepth) {
@@ -82,6 +80,7 @@ window.addEventListener('keydown', (e) => {
 window.addEventListener('click', onClick);
 
 function onClick(event) {
+    if (GUI.mouseOverUI) return;
 
     const rect = renderer.renderer.domElement.getBoundingClientRect();
 
@@ -99,7 +98,7 @@ function onClick(event) {
             state.selectedPoints = graph.getAncestors(graph.vertices[vertexIndex]);
         }
 
-        formatBoard(graph.vertices[vertexIndex].id);
+        formatBoard(graph.getVisibleVertices(state)[vertexIndex].id);
     }
 }
 
@@ -146,12 +145,14 @@ function animate() {
     const nodeCounter = document.getElementById('nodeCounter');
     const edgeCounter = document.getElementById('edgeCounter');
     const inspectModeFlag = document.getElementById('inspectModeFlag');
+    const isolateModeFlag = document.getElementById('isolateModeFlag');
     const colorModeLabel = document.getElementById('colorModeLabel');
     const pauseLabel = document.getElementById('pauseLabel');
 
-    nodeCounter.textContent = `Nodes selected: ${state.selectedPoints.length}`;
-    edgeCounter.textContent = `Edges selected: ${graph.getNeighborPairs(state.selectedPoints).length}`;
-    inspectModeFlag.textContent = `Inspect mode ${state.inspectMode ? 'on' : 'off'}`;
+    nodeCounter.textContent = `States (Nodes) selected: ${state.selectedPoints.length}`;
+    edgeCounter.textContent = `Moves (Edges) selected: ${graph.getNeighborPairs(state.selectedPoints).length}`;
+    inspectModeFlag.textContent = `Inspect mode: ${state.inspectMode ? 'on' : 'off'}`;
+    isolateModeFlag.textContent = `Isolate mode: ${state.isolateSelected ? 'on' : 'off'}`;
     colorModeLabel.textContent = `Color mode: ${state.coloringMode === 0 ? 'depth' : state.coloringMode === 1 ? 'probabilistic outcome' : 'perfect-play outcome (minimax)'}`;
     pauseLabel.textContent = `Physics: ${state.paused ? 'off' : 'on'}`;
 
@@ -160,14 +161,11 @@ function animate() {
 }
 
 const loadingScreen = document.getElementById('loadingScreen');
-const helpLabel = document.getElementById('help');
 const loader = document.querySelector('#loadingScreen .loader');
 
 const fill = document.querySelector('.progressFill');
 
 loadingScreen.style.display = 'flex';
-helpLabel.style.display = 'none';
-document.querySelectorAll('.dg').forEach(gui => gui.style.display = 'none');
 
 function processEvaluations(vertices) {
     let index = 0;
@@ -190,8 +188,6 @@ function processEvaluations(vertices) {
             setTimeout(nextChunk, 0);
         } else {
             loadingScreen.style.display = 'none';
-            helpLabel.style.display = 'block';
-            document.querySelectorAll('.dg').forEach(gui => gui.style.display = 'block');
             renderer.renderer.setAnimationLoop(animate);
         }
     }

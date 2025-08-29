@@ -10,7 +10,6 @@
       margin: 0;
     }
   </style>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.7.9/dat.gui.min.js"></script>
   <script type="importmap">
   {
     "imports": {
@@ -23,35 +22,137 @@
 
 <body>
   <div id="hud">
-    <div id="nodeCounter">Nodes selected: 0</div>
-    <div id="edgeCounter">Edges selected: 0</div>
-    <div id="inspectModeFlag">Inspect mode off</div>
+    <div id="nodeCounter">States (Nodes) selected: 0</div>
+    <div id="edgeCounter">Moves (Edges) selected: 0</div>
+    <div id="inspectModeFlag">Inspect mode: off</div>
+    <div id="isolateModeFlag">Isolate mode: off</div>
     <div id="colorModeLabel">Color mode: depth</div>
     <div id="pauseLabel">Physics: on</div>
   </div>
+  <div class="hud-panel">
+    <div class="folder-header">
+      Filters ▼
+    </div>
+    <div class="folder-content">
+      <label>
+        <span>Filter by depth</span>
+        <input type="checkbox" id="depthFilterToggle">
+      </label>
+      <div class="folder-content" id="depthFilterFolder">
+          <div class="depth-row">
+          <span>Min depth</span>
+          <input type="range" min="0" max="9" value="0" id="minDepthInput">
+          <span id="minDepthValue">0</span>
+        </div>
+        <div class="depth-row">
+          <span>Max depth</span>
+          <input type="range" min="0" max="9" value="9" id="maxDepthInput">
+          <span id="maxDepthValue">9</span>
+        </div>
+      </div>
+
+      <label>
+        <span>Filter by state</span>
+        <input type="checkbox" id="stateFilterToggle">
+      </label>
+      <div class="folder-content" id="stateFilterFolder">
+        <div id="filter-board">
+          <div class="tile" id="tile-0">
+            <div></div>
+          </div>
+          <div class="tile" id="tile-1">
+            <div></div>
+          </div>
+          <div class="tile" id="tile-2">
+            <div></div>
+          </div>
+          <div class="tile" id="tile-3">
+            <div></div>
+          </div>
+          <div class="tile" id="tile-4">
+            <div></div>
+          </div>
+          <div class="tile" id="tile-5">
+            <div></div>
+          </div>
+          <div class="tile" id="tile-6">
+            <div></div>
+          </div>
+          <div class="tile" id="tile-7">
+            <div></div>
+          </div>
+          <div class="tile" id="tile-8">
+            <div></div>
+          </div>
+        </div>
+      </div>
+      <button id="applyFiltersButton">Apply filters</button>
+    </div>
+  </div>
+
 
   <div id="board">
-    <div class="tile" id="tile-0"><div></div></div>
-    <div class="tile" id="tile-1"><div></div></div>
-    <div class="tile" id="tile-2"><div></div></div>
-    <div class="tile" id="tile-3"><div></div></div>
-    <div class="tile" id="tile-4"><div></div></div>
-    <div class="tile" id="tile-5"><div></div></div>
-    <div class="tile" id="tile-6"><div></div></div>
-    <div class="tile" id="tile-7"><div></div></div>
-    <div class="tile" id="tile-8"><div></div></div>
+    <div class="tile" id="tile-0">
+      <div></div>
+    </div>
+    <div class="tile" id="tile-1">
+      <div></div>
+    </div>
+    <div class="tile" id="tile-2">
+      <div></div>
+    </div>
+    <div class="tile" id="tile-3">
+      <div></div>
+    </div>
+    <div class="tile" id="tile-4">
+      <div></div>
+    </div>
+    <div class="tile" id="tile-5">
+      <div></div>
+    </div>
+    <div class="tile" id="tile-6">
+      <div></div>
+    </div>
+    <div class="tile" id="tile-7">
+      <div></div>
+    </div>
+    <div class="tile" id="tile-8">
+      <div></div>
+    </div>
   </div>
 
-  <div id="help">
-    <b>Controls</b><br>
-    [Space] Toggle isolate<br>
-    [Esc] Clear selection<br>
-    [I] Inspect mode<br>
-    [P] Pause physics<br>
-    [1] Depth coloring<br>
-    [2] Probabilistic coloring<br>
-    [3] Minimax coloring<br>
+  <div id="helpPanel">
+    <button id="helpToggle">?</button>
+    <div id="helpContent">
+      <b>Navigation:</b><br>
+      - [Left Mouse Button (LMB)] Rotate the view<br>
+      - [Right Mouse Button (RMB)] Pan the view<br>
+      - [Mouse Wheel] Zoom in/out<br>
+      - [LMB on Node] selects the node and all its ancestors<br>
+      - [Space] Toggle Isolate mode (simulate/render only selected nodes)<br>
+      - [Esc] Clear selection<br>
+      <br>
+      <b>Modes:</b><br>
+      - [I] Toggle Inspect mode (view node state without selecting)<br>
+      - [P] Toggle Physics<br>
+      <br>
+      <b>Coloring:</b><br>
+      - [1] Depth coloring<br>
+      - [2] Probabilistic outcome coloring<br>
+      - [3] Minimax outcome coloring<br>
+      <br>
+      <b>State filters:</b><br>
+      - X = only X<br>
+      - O = only O<br>
+      - Red X = not X<br>
+      - Red O = not O<br>
+      - Gray tile = only empty<br>
+      - Red tile = not empty<br>
+      - Green tile = any state<br>
+    </div>
   </div>
+
+
   <script type="module" src="./app.js"></script>
 
   <div id="loadingScreen">

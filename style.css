@@ -197,8 +197,7 @@ canvas {
 }
 
 .depth-row input[type="range"] {
-  flex: 1;
-  margin: 0 8px;
+  width: 50%;
 }
 
 #board, #filter-board {
